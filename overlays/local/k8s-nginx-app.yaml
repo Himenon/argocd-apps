@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-app
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Himenon/k8s-nginx-app.git
+    targetRevision: master
+    path: overlays/local
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated: {}
